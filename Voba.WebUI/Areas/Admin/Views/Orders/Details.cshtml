@@ -1,0 +1,96 @@
+﻿@model Voba.Core.Entities.Order
+
+
+@{
+    ViewData["Title"] = "Sipariş Detayları";
+}
+<link href="~/css/adminOrderDetails.css" rel="stylesheet" />
+
+<div class="order-summary mb-3 p-2 border rounded d-flex flex-wrap gap-2 bg-light">
+    <div class="p-2 border rounded bg-white d-flex align-items-center small">
+        <strong class="me-1">Kişi:</strong> @Model.User?.Name
+    </div>
+    <div class="p-2 border rounded bg-white d-flex align-items-center small">
+        <strong class="me-1">Adres:</strong> @Model.ShippingAddress
+    </div>
+    <div class="p-2 border rounded bg-white d-flex align-items-center small">
+        <strong class="me-1">Sipariş Kodu:</strong> @Model.OrderCode
+    </div>
+    <div class="p-2 border rounded bg-white d-flex align-items-center small">
+        <strong class="me-1">Sipariş Türü:</strong> @Model.OrderType?.Name
+    </div>
+    <div class="p-2 border rounded bg-white d-flex align-items-center small">
+        <strong class="me-1">Tarih:</strong> @Model.OrderDate.ToString("dd.MM.yyyy")
+    </div>
+</div>
+
+<hr />
+
+<table id="ordersTable" class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            @* <th>Kullanıcı</th>
+            <th>Adres</th>
+            <th>Sipariş kodu</th>
+            <th>Sipariş Tarihi</th>
+            <th>Kapak türü</th> *@
+
+            <th>Model</th>
+            <th>Renk</th>
+            <th>Boy</th>
+            <th>En</th>
+            <th>Adet</th>
+            <th>m2</th>
+            <th>m2 Fiyatı</th>
+            <th>Tutar</th>
+            <th>Açıklama</th>
+            <th>İşlem</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orderProduct in Model.OrderProducts)
+        {
+            <tr>
+                <td>@orderProduct.ModelName</td>
+                <td>@orderProduct.Color</td>
+                <td>@orderProduct.Length</td>
+                <td>@orderProduct.Width</td>
+                <td>@orderProduct.Quantity</td>
+                <td>@orderProduct.SquareMeter</td>
+                <td>@orderProduct.SquareMeterPrice</td>
+                <td>@orderProduct.Price</td>
+                <td>@orderProduct.Description</td>
+
+
+                <td>
+                    <a asp-area="Admin" asp-controller="Orders" asp-action="Edit" asp-route-id="@orderProduct.OrderId" class="btn btn-sm btn-primary">Düzenle</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr class="table-secondary">
+            <td colspan="5" class="text-end"><strong>Toplam m²:</strong></td>
+            <td><strong>@Model.OrderProducts.Sum(op => op.SquareMeter)</strong></td>
+            <td colspan="2" class="text-end"><strong>Toplam Tutar:</strong></td>
+            <td><strong>@Model.OrderProducts.Sum(op => op.Price)</strong></td>
+            <td colspan="6"></td>
+        </tr>
+    </tfoot>
+
+</table>
+
+<div class="d-flex justify-content-end mb-2">
+    <a asp-action="Index" class="btn btn-secondary me-2">Listeye geri dön</a>
+ 
+    <button id="printButton" class="btn btn-success btn-sm" onclick="printTable('ordersTable')">
+        <i class="fa-solid fa-print"></i> Yazdır
+    </button>
+    <button id="exportExcel" class="btn btn-primary btn-sm ms-2">
+        <i class="fa-solid fa-file-excel"></i> Excel'e Aktar
+    </button>
+</div>
+<script src="~/js/Order/detail.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>

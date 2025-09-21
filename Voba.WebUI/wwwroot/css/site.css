@@ -1,0 +1,413 @@
+html {
+    font-size: 14px;
+}
+
+/* navbar sabit, içerik header altýnda kalmasýn diye boþluk */
+body {
+    padding-top: 70px; /* fixed navbar yüksekliði kadar boþluk */
+    font-family: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased; /* Chrome, Safari */
+    -moz-osx-font-smoothing: grayscale; /* Firefox */
+    text-rendering: optimizeLegibility;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/* Slider kapsayýcýsý ekran yüksekliðini kaplasýn */
+.fullscreen-slider {
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Görseller her zaman tam otursun, taþmasýn */
+.slider-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* Tam geniþlikte çizgi */
+.full-width-line {
+    width: 100vw;
+    height: 2px;
+    background-color: #ecb800;
+    margin: 0 0 30px 0;
+    padding: 0;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: #1f1400 !important;
+}
+
+.nav-item-link {
+    color: #fff !important;
+    transition: color 0.3s ease, transform 0.3s ease;
+    padding: 0.3rem 0.6rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    display: inline-block;
+}
+
+    .nav-item-link:hover {
+        color: #ecb800 !important;
+        text-decoration: underline;
+        transform: translateY(-2px);
+    }
+
+/* Dropdown menu */
+.dropdown-menu {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 12rem;
+}
+
+    .dropdown-menu .dropdown-item {
+        color: #1f1400;
+        font-weight: 600;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        .dropdown-menu .dropdown-item:hover,
+        .dropdown-menu .dropdown-item:focus {
+            background-color: #ecb800;
+            color: #1f1400;
+        }
+
+/* Footer sosyal ikonlar */
+.footer-social {
+    color: #fff; /* normal beyaz */
+    text-decoration: none; /* alt çizgi yok */
+    background: none !important; /* arka plan kaldýr */
+    border: none !important; /* çerçeve kaldýr */
+    box-shadow: none !important; /* gölge kaldýr */
+    outline: none !important; /* outline kaldýr */
+    transition: color 0.3s ease;
+}
+
+    .footer-social:hover {
+        color: #ecb800; /* hover sarý */
+        background: none !important; /* hover arka plan yok */
+        border: none !important; /* hover çerçeve yok */
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+/* Giriþ yap butonu */
+.btn-outline-light {
+    color: #ecb800 !important;
+    border-color: #ecb800 !important;
+    transition: all 0.3s ease;
+}
+
+    .btn-outline-light:hover {
+        background-color: #ecb800 !important;
+        color: #302000 !important;
+        border-color: #ecb800 !important;
+        transform: translateY(-1px);
+    }
+
+/* Genel baþlýk ve paragraf */
+section h2 {
+    font-weight: bold;
+}
+
+section p {
+    line-height: 1.6;
+}
+
+/* Neden Biz? Bölümü */
+.advantages-section {
+    background: linear-gradient(135deg, #f7f2e7, #d9c9a3);
+    padding: 2rem 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.advantage-item {
+    margin-bottom: 1.5rem;
+}
+
+.advantage-icon {
+    font-size: 3rem;
+    color: #ecb800;
+    margin-bottom: 0.5rem;
+}
+
+.advantage-title {
+    font-size: 1.25rem;
+    color: #302000;
+    margin-bottom: 0.25rem;
+}
+
+.advantage-text {
+    color: #5a4a21;
+    font-size: 1rem;
+}
+
+/* Ürün galerisi */
+.product-gallery img {
+    width: 180px;
+    height: 280px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 8px;
+}
+
+    .product-gallery img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(236, 184, 0, 0.6);
+    }
+
+/* Tüm Ürünler butonu */
+.btn-products {
+    background-color: #ecb800;
+    color: #302000;
+    font-weight: 600;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+    .btn-products:hover {
+        background-color: #d1a400;
+        color: #1f1400;
+        transform: translateY(-2px);
+    }
+
+/* Çaðrý bölümü (Call to action) */
+section.py-5[style*="background-color: #302000"] {
+    box-shadow: inset 0 0 15px #000000cc;
+}
+
+    section.py-5[style*="background-color: #302000"] h2 {
+        font-weight: 700;
+        font-size: 2.5rem;
+    }
+
+    section.py-5[style*="background-color: #302000"] p {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    section.py-5[style*="background-color: #302000"] .btn-warning {
+        background-color: #ecb800;
+        color: #302000;
+        font-weight: 700;
+        padding: 0.75rem 2rem;
+        border-radius: 30px;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+        section.py-5[style*="background-color: #302000"] .btn-warning:hover {
+            background-color: #d1a400;
+            color: #1f1400;
+        }
+
+/* Responsive ayarlar */
+@media (max-width: 767.98px) {
+    .advantages-section .advantage-item {
+        margin-bottom: 2rem;
+    }
+
+    .product-gallery img {
+        width: 140px;
+        height: 100px;
+    }
+}
+/* Üye Ol Sayfasý */
+.signup-container {
+    display: flex;
+    justify-content: center;
+    padding: 50px 15px;
+}
+
+.signup-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    width: 100%;
+    max-width: 450px;
+    border: 1px solid #ddd;
+}
+
+.signup-title {
+    color: #302000;
+    font-weight: 600;
+    text-align: center;
+}
+
+.signup-card .form-label {
+    font-weight: 500;
+    color: #302000;
+}
+
+.signup-card .form-control {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    transition: border-color 0.3s;
+}
+
+    .signup-card .form-control:focus {
+        border-color: #ecb800;
+        box-shadow: 0 0 4px rgba(236, 184, 0, 0.6);
+    }
+
+.signup-btn {
+    background-color: #ecb800;
+    border: none;
+    color: #302000;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+    .signup-btn:hover {
+        background-color: #d4a800;
+    }
+
+/* Genel arka plan */
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+/* Form container */
+.form-signin {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.15);
+}
+
+    /* Baþlýk */
+    .form-signin h1 {
+        color: #302000;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+/* Input alanlarý */
+.form-control {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+    .form-control:focus {
+        border-color: #ecb800;
+        box-shadow: 0 0 5px rgba(236, 184, 0, 0.5);
+    }
+
+    /*SignIn*/
+
+.login-page {
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 120px); /* header + footer yüksekliði düþtükten sonra kalan alan */
+    padding-top: 40px; /* üye ol sayfasýndaki gibi aþaðýdan baþlasýn */
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 400px;
+}
+
+.btn-warning {
+    background-color: #ecb800; /* senin sarý */
+    border-color: #ecb800;
+    color: #302000;
+    font-weight: bold;
+}
+
+    .btn-warning:hover {
+        background-color: #d1a600; /* biraz koyusu */
+        border-color: #d1a600;
+    }
+
+/* Header yazýlarýný daha net yapmak için */
+header,
+header .navbar,
+header .navbar-brand,
+header .nav-link {
+    font-family: 'Open Sans', sans-serif;
+    -webkit-font-smoothing: antialiased; /* Chrome & Safari */
+    -moz-osx-font-smoothing: grayscale; /* Firefox */
+    text-rendering: optimizeLegibility; /* Daha iyi kerning */
+    font-weight: 700; /* Bold */
+}
+
+/*Order search box*/
+/*.search-wrapper {
+    max-width: 250px;
+}
+
+#orderSearch {
+    height: 38px;
+    border-radius: 25px;
+    padding: 0 15px;
+    border: 1px solid #ced4da;
+    transition: all 0.3s ease;
+    box-shadow: none !important;
+}
+
+    #orderSearch:focus {
+        outline: none;
+        border-color: #0d6efd;
+        box-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
+    }*/
+
+    /* Create order form boyutlandýrma */
+.select2-container {
+    width: 100% !important;
+    table-layout: fixed !important; /* Hücreler sabit geniþlikte olacak */
+    max-width: 100% !important;
+}
+
+/*Data table*/
+table.dataTable {
+    width: 100%;
+    table-layout: fixed; /* sütun geniþliklerini sabitler */
+}
+    table.dataTable th,
+    table.dataTable td {
+        white-space: nowrap; /* tek satýr */
+        overflow: hidden;
+        text-overflow: ellipsis; /* uzun metinler ... ile kesilir */
+        text-align: center;
+    }
+
+
+
+
+
+
+
+
+

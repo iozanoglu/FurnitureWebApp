@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Yeni Sipariş Oluştur";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+
+<div class="container mt-4">
+
+    @await Html.PartialAsync("~/Areas/Admin/Views/Orders/Partials/_OrderTablePartial.cshtml", 30, new ViewDataDictionary(ViewData) { { "UserList", ViewBag.UserSelectList } })
+</div>
+
+<script src="/js/Order/create.js"></script>

@@ -1,0 +1,147 @@
+﻿@model Voba.Core.Entities.Order
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Siparişi Düzenle";
+    var userSelectList = ViewData["UserList"] as SelectList;
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+<hr />
+
+<form id="orderEditForm">
+    <div class="text-danger mb-2"></div>
+
+    <input type="hidden" name="id" value="@Model.Id" />
+    <input type="hidden" name="orderTypeId" value="@Model.OrderTypeId" />
+    @* <input type="hidden" asp-for="OrderCode" /> *@
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Kullanıcı</label>
+            @if (isAdmin)
+            {
+                <select name="userId" class="form-control" asp-items="userSelectList"></select>
+            }
+            else
+            {
+                <input type="hidden" value="@Model.UserId" name="userId" />
+                <input type="text" class="form-control" value="@User.Identity?.Name" readonly />
+            }
+            <span class="text-danger"></span>
+        </div>
+
+         <div class="col-md-3">
+            <label class="form-label">Sipariş Tarihi</label>
+            <input value="@Model.OrderDate.ToString("dd/MM/yyyy")" name="orderDate" class="form-control datepickerForOrderEdit" type="text" required />
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Sevkiyat Tarihi</label>
+            <input value="@Model.ShipmentDate?.ToString("dd/MM/yyyy")" name="shipmentDate" class="form-control datepickerForOrderEdit" type="text" />
+            <span class="text-danger"></span>
+        </div> 
+
+        <div class="col-md-6">
+            <label class="form-label">Firma Adı</label>
+            <input value="@Model.CompanyName" name="companyName" class="form-control" required />
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Teslimat Adresi</label>
+            <input value="@Model.ShippingAddress" name="shippingAddress" class="form-control" required />
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Sipariş Durumu</label>
+            <select name="status" class="form-control" asp-items="ViewBag.StatusList"></select>
+            <span class="text-danger"></span>
+        </div>
+    </div>
+
+    <hr class="my-4" />
+
+    <div class="alert alert-danger py-2">
+        Lütfen ölçüleri önce <strong>boy</strong>, sonra <strong>en</strong> olacak şekilde ve <strong>cm</strong> cinsinden giriniz.
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="m-0">Sipariş Kalemleri</h5>
+        <div class="small text-muted">m² = (Boy × En × Adet) / 10.000</div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle" id="orderItemsTable">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Model</th>
+                    <th>Renk</th>
+                    <th>Boy (cm)</th>
+                    <th>En (cm)</th>
+                    <th>Adet</th>
+                    <th>m²</th>
+                    <th>m² Fiyatı</th>
+                    <th>Toplam</th>
+                    <th>Açıklama</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="orderRows">
+                @for (int i = 0; i < Model.OrderProducts.Count; i++)
+                {
+                    var p = Model.OrderProducts.ElementAt(i);
+                    <tr class="order-row">
+                        <td class="text-center">@((i + 1))</td>
+                        <td>
+                            <input name="OrderProducts[@i].modelName" class="form-control" value="@p.ModelName" />
+
+                            @* gizli alanları input olarak koy ama görünmez *@
+                            <input name="OrderProducts[@i].id" type="hidden" value="@p.Id" />
+                            <input name="OrderProducts[@i].orderId" type="hidden" value="@p.OrderId" />
+                        </td>
+                        <td><input name="OrderProducts[@i].color" class="form-control" value="@p.Color" required /></td>
+                        <td><input name="OrderProducts[@i].length" class="form-control boy" value="@p.Length" required /></td>
+                        <td><input name="OrderProducts[@i].width" class="form-control en" value="@p.Width" required /></td>
+                        <td><input name="OrderProducts[@i].quantity" class="form-control adet" value="@p.Quantity" required /></td>
+                        <td><input name="OrderProducts[@i].squareMeter" class="form-control metrekare" readonly value="@p.SquareMeter" required /></td>
+                        <td><input name="OrderProducts[@i].squareMeterPrice" class="form-control fiyat" value="@p.SquareMeterPrice" required /></td>
+                        <td><input name="OrderProducts[@i].price" class="form-control toplam" value="@p.Price" required /></td>
+                        <td><input name="OrderProducts[@i].description" class="form-control" value="@p.Description" /></td>
+                        <td><button type="button" class="btn btn-danger btn-sm remove-row">&times;</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <label>Toplam m²:</label>
+            <input type="text" id="totalSquareMeter" class="form-control" readonly />
+        </div>
+        <div class="col-md-3">
+            <label>Toplam Tutar:</label>
+            <input type="text" id="grandTotalPrice" class="form-control" />
+        </div>
+    </div>
+
+    <div class="d-flex gap-2 mb-4">
+        <button type="button" class="btn btn-primary" id="addRow">Satır Ekle</button>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success">Kaydet</button>
+        <a href="/Admin/Orders/Index" class="btn btn-secondary">Listeye geri dön</a>
+    </div>
+</form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-datepicker/1.13.2/i18n/datepicker-tr.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+@section Scripts {
+    <script src="/js/Order/edit.js"></script>
+}

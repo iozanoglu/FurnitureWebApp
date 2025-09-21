@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Voba.Core.Entities.Slider>
+
+<!-- Tam ekran slider -->
+<div id="carouselExampleIndicators" class="carousel slide fullscreen-slider" data-bs-ride="carousel">
+    <!-- Slider Düğmeleri -->
+    <div class="carousel-indicators">
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            <button type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="@i"
+                    class="@(i == 0 ? "active" : "")"
+                    aria-current="@(i == 0 ? "true" : "false")"
+                    aria-label="Slide @(i + 1)">
+            </button>
+        }
+    </div>
+
+    <!-- Görseller -->
+    <div class="carousel-inner h-100">
+        @foreach (var item in Model.Select((value, index) => new { value, index }))
+        {
+            <div class="carousel-item @(item.index == 0 ? "active" : "") h-100">
+                <img src="/Img/Slider/@item.value.Image"
+                     class="slider-image"
+                     alt="@item.value.Title" />
+            </div>
+        }
+    </div>
+
+    <!-- Sol/Sağ Yön Tuşları -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Önceki</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Sonraki</span>
+    </button>
+</div>

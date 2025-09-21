@@ -1,0 +1,60 @@
+﻿@using Voba.Core.Entities
+@model Order
+
+@{
+    ViewData["Title"] = "Sipariş Detayları";
+}
+
+<h2 class="mb-3">@ViewData["Title"]</h2>
+
+<div class="d-flex justify-content-end mb-2">
+    <button id="printButton" class="btn btn-success btn-sm" onclick="printTable('ordersTable')">
+        <i class="fa-solid fa-print"></i> Yazdır
+    </button>
+</div>
+<hr />
+
+<table id="ordersTable" class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Model</th>
+            <th>Renk</th>
+            <th>Boy</th>
+            <th>En</th>
+            <th>Adet</th>
+            <th>m²</th>
+            <th>m² Fiyatı</th>
+            <th>Tutar</th>
+            <th>Açıklama</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orderProduct in Model.OrderProducts)
+        {
+            <tr>
+                <td>@orderProduct.ModelName</td>
+                <td>@orderProduct.Color</td>
+                <td>@orderProduct.Length</td>
+                <td>@orderProduct.Width</td>
+                <td>@orderProduct.Quantity</td>
+                <td>@orderProduct.SquareMeter</td>
+                <td>@orderProduct.SquareMeterPrice</td>
+                <td>@orderProduct.Price</td>
+                <td>@orderProduct.Description</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="7" class="text-end">Toplam tutar:</th>
+            <th id="totalPrice">@(Model.TotalAmount != null ? Model.TotalAmount : "")</th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Listeye geri dön</a>
+</div>
+
+<script src="~/js/Order/detail.js"></script>

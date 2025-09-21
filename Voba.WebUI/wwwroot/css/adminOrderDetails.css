@@ -1,0 +1,46 @@
+﻿/* order-detail.css */
+.order-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem;
+}
+
+    .order-summary > div {
+        flex: 0 0 auto;
+        padding: 0.2rem;
+        font-size: 0.85rem;
+        border: 1px solid #ccc;
+        background: #fff;
+    }
+
+@media print {
+    .order-summary {
+        display: flex !important; /* flex bırak */
+        flex-wrap: wrap !important; /* satırlar taşarsa alt satıra geçsin */
+        gap: 0.3rem !important; /* boşluğu küçült */
+        margin-bottom: 0.5rem;
+    }
+
+        .order-summary > div {
+            flex: 0 0 auto; /* genişlik içerik kadar */
+            padding: 0.2rem 0.3rem !important;
+            font-size: 9pt !important;
+            background: #fff;
+        }
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid #000;
+}
+
+th, td {
+    padding: 4px 6px;
+    text-align: left;
+    font-size: 12pt;
+}

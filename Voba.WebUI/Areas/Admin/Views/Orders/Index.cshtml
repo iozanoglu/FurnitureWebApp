@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Voba.Core.Entities.Order>
+
+@{
+    ViewData["Title"] = "Siparişler";
+
+    var groupedOrders = Model
+        .GroupBy(o => o.Status)
+        .OrderBy(g => g.Key);
+
+    var hasBeklemede = groupedOrders.Any(g => g.Key == Voba.Core.Enums.OrderStatus.Beklemede);
+}
+
+<div class="d-flex align-items-center mb-3 gap-2">
+    <a asp-action="Create" class="btn btn-outline-primary">
+        <i class="fa-solid fa-plus"></i> Yeni Sipariş Oluştur
+    </a>
+
+    <div class="ms-auto" style="width: 250px;">
+        <input type="text" id="globalSearch" class="form-control" placeholder="Ara..." />
+    </div>
+</div>
+
+<!-- Tabs Navigation -->
+<ul class="nav nav-tabs" id="orderTabs" role="tablist">
+    @foreach (var group in groupedOrders)
+    {
+        var tabId = $"tab-{group.Key}";
+        var isActive = group.Key == Voba.Core.Enums.OrderStatus.Beklemede
+        ? "active"
+        : (!hasBeklemede && group == groupedOrders.First() ? "active" : "");
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link @isActive" id="@tabId-tab" data-bs-toggle="tab" data-bs-target="#@tabId" type="button" role="tab" aria-controls="@tabId" aria-selected="true">
+                @switch (group.Key)
+                {
+                    case Voba.Core.Enums.OrderStatus.Beklemede:
+                        @:<span class="badge bg-warning text-dark">Beklemede (@group.Count())</span>
+                        break;
+                    case Voba.Core.Enums.OrderStatus.İşletmede:
+                        @:<span class="badge bg-primary">İşletmede (@group.Count())</span>
+                        break;
+                    case Voba.Core.Enums.OrderStatus.SevkiyataHazır:
+                        @:<span class="badge bg-info text-dark">Sevkiyata Hazır (@group.Count())</span>
+                        break;
+                    case Voba.Core.Enums.OrderStatus.TeslimEdildi:
+                        @:<span class="badge bg-success">Teslim Edildi (@group.Count())</span>
+                        break;
+                    default:
+                        @:<span class="badge bg-secondary">Bilinmeyen (@group.Count())</span>
+                        break;
+                }
+            </button>
+        </li>
+    }
+</ul>
+
+<!-- Tabs Content -->
+<div class="tab-content mt-3" id="orderTabsContent">
+    @foreach (var group in groupedOrders)
+    {
+        var tabId = $"tab-{group.Key}";
+        var isActive = group.Key == Voba.Core.Enums.OrderStatus.Beklemede
+        ? "show active"
+        : (!hasBeklemede && group == groupedOrders.First() ? "show active" : "");
+
+        <div class="tab-pane fade @isActive" id="@tabId" role="tabpanel" aria-labelledby="@tabId-tab">
+            <table id="table-@group.Key" class="table table-bordered table-hover datatable">
+                <thead>
+                    <tr>
+                        <th>Kullanıcı</th>
+                        <th>Sipariş Kodu</th>
+                        <th>Adres</th>
+                        <th>Sipariş Türü</th>
+                        <th>Durum</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in group)
+                    {
+                        <tr>
+                            <td>@item.User?.Name</td>
+                            <td>@item.OrderCode</td>
+                            <td>@item.ShippingAddress</td>
+                            <td>@item.OrderType?.Name</td>
+                            <td>
+                                @if (item.Status == Voba.Core.Enums.OrderStatus.Beklemede)
+                                {
+                                    <span class="badge bg-warning text-dark">Beklemede</span>
+                                }
+                                else if (item.Status == Voba.Core.Enums.OrderStatus.İşletmede)
+                                {
+                                    <span class="badge bg-primary">İşletmede</span>
+                                }
+                                else if (item.Status == Voba.Core.Enums.OrderStatus.SevkiyataHazır)
+                                {
+                                    <span class="badge bg-info text-dark">Sevkiyata Hazır</span>
+                                }
+                                else if (item.Status == Voba.Core.Enums.OrderStatus.TeslimEdildi)
+                                {
+                                    <span class="badge bg-success">Teslim Edildi</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash-can"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<!-- DataTables CSS & JS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="~/js/Order/index.js"></script>

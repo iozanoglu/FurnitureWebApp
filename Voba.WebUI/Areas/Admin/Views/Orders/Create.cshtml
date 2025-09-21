@@ -1,0 +1,14 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Yeni Sipariş Oluştur";
+Layout= "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="container mt-4">
+
+    @await Html.PartialAsync("Partials/_OrderTablePartial", 30, new ViewDataDictionary(ViewData) { {"UserList", ViewBag.UserSelectList }})
+</div>
+
+<script src="/js/Order/create.js"></script>

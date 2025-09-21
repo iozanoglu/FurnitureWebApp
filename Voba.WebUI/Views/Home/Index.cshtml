@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Voba.Core.Entities.Slider>
+
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<partial name="_Slider" />
+
+<!-- SLIDER İLE ÇİZGİ ARASINA BOŞLUK -->
+<div class="my-4"></div>
+
+<!-- Tam genişlikte çizgi -->
+<div class="full-width-line"></div>
+
+<!-- GÖRSEL + YAZI BLOĞU -->
+<section class="py-5 bg-light">
+    <div class="container d-flex flex-column flex-md-row align-items-center">
+        <!-- Görsel -->
+        <div class="mb-4 mb-md-0 me-md-4">
+            <img src=" " alt="Hakkımızda" class="img-fluid" style="max-width: 300px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border-radius: 8px;">
+
+        </div>
+
+        <!-- Yazı -->
+        <div>
+            <h2 class="mb-3">Firma Hakkında</h2>
+            <p class="fs-5 text-muted">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore 
+                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ======= NEDEN BİZ? Bölümü ======= -->
+<section class="advantages-section container my-5 p-4 rounded shadow-sm">
+    <h2 class="mb-4 text-center">Neden Biz?</h2>
+    <div class="row text-center">
+        <div class="col-md-3 advantage-item">
+            <i class="fas fa-check-circle advantage-icon"></i>
+            <h3 class="advantage-title">Kaliteli Malzeme</h3>
+            <p class="advantage-text">Yıllara meydan okuyan dayanıklılık.</p>
+        </div>
+        <div class="col-md-3 advantage-item">
+            <i class="fas fa-tags advantage-icon"></i>
+            <h3 class="advantage-title">Uygun Fiyat</h3>
+            <p class="advantage-text">Her bütçeye uygun çözümler.</p>
+        </div>
+        <div class="col-md-3 advantage-item">
+            <i class="fas fa-truck-fast advantage-icon"></i>
+            <h3 class="advantage-title">Hızlı Teslimat</h3>
+            <p class="advantage-text">Siparişiniz kısa sürede kapınızda.</p>
+        </div>
+        <div class="col-md-3 advantage-item">
+            <i class="fas fa-pencil-ruler advantage-icon"></i>
+            <h3 class="advantage-title">Özel Tasarım</h3>
+            <p class="advantage-text">İhtiyacınıza göre üretim.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ======= ÜRÜNLERİMİZDEN ÖRNEKLER ======= -->
+<section class="product-gallery container text-center my-5">
+    <h2 class="mb-4">Ürünlerimizi İnceleyin</h2>
+    <div class="d-flex justify-content-center flex-wrap gap-3">
+        <img src=" " alt="Ürün 1" class="rounded shadow-sm" />
+        <img src=" " alt="Ürün 2" class="rounded shadow-sm" />
+        <img src=" " alt="Ürün 3" class="rounded shadow-sm" />
+        <img src=" " alt="Ürün 4" class="rounded shadow-sm" />
+        <img src=" " alt="Ürün 5" class="rounded shadow-sm" />
+    </div>
+    <a href="/Home/Catalog" class="btn-products mt-4">Tüm Ürünler</a>
+</section>
+
+<!-- ÇAĞRI (CALL TO ACTION) BÖLÜMÜ -->
+<section class="py-5" style="background-color: #d9c9a3; color: #000000;">
+    <div class="container text-center">
+        <h2 class="mb-4">Hayalinizdeki mobilya kapaklarını üretelim</h2>
+        <p class="mb-4">Hemen bizimle iletişime geçin, size özel çözümler sunalım.</p>
+        <a href="/Home/ContactUs" class="btn btn-warning btn-lg">Teklif Al</a>
+
+    </div>
+</section>

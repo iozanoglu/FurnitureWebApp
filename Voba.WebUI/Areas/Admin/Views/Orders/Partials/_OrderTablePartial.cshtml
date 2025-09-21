@@ -1,0 +1,124 @@
+﻿@{
+    var userSelectList = ViewData["UserList"] as SelectList;
+    var isAdmin = User.IsInRole("Admin");
+    var currentUserId = int.Parse(User.FindFirst("Id")?.Value);
+
+}
+@model int
+
+<form id="orderForm">
+    <div class="row">
+        <div class="col-md-6 col-6">
+
+            <div class="mb-1">
+                <label for="userId" class="form-label" style="margin-bottom: 1px;">Kullanıcı</label>
+                @if (isAdmin)
+                {
+                    <select id="userId" name="userId" class="form-control select2" asp-items="@userSelectList"></select>
+                }
+                else
+                {
+                    <input type="hidden" id="userId" name="userId" value="@currentUserId" />
+                    <input type="text" class="form-control" value="@User.Identity.Name" disabled required />
+                }
+            </div>
+
+            <div class="mb-3">
+                <label for="orderTypeId" class="form-label">Sipariş Türü</label>
+                <select id="orderTypeId" name="orderTypeId" class="form-control" required>
+                    <option value="" disabled selected hidden>Kapak türü seçiniz</option>
+                    @foreach (var item in ViewData["OrderTypeSelectList"] as SelectList)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Diğer alanlar -->
+            <div class="mb-1">
+                <label for="companyName" class="form-label">Firma Adı</label>
+                <input type="text" class="form-control" id="companyName" name="companyName" />
+            </div>
+            <div class="mb-1">
+                <label for="shippingAddress" class="form-label">Teslimat Adresi</label>
+                <input type="text" class="form-control" id="shippingAddress" name="shippingAddress" required />
+            </div>
+        </div>
+
+        <div class="col-md-6 col-6 d-flex align-items-center justify-content-center">
+            <img src=" " alt="Voba Logo" class="img-fluid" style="object-fit: contain;" />
+        </div>
+    </div>
+
+    @* Admin ve user için ayrı tablolar *@
+    <div id="orderTableContainer">
+        <table class="table table-bordered" id="ordersTable">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Renk</th>
+                    <th>No</th>
+                    <th>Boy</th>
+                    <th>En</th>
+                    <th>Adet</th>
+                    <th>m²</th>
+                    @if (isAdmin)
+                    {
+                        <th>m² Fiyatı</th>
+                        <th>Toplam Fiyat</th>
+                    }
+                    <th>Açıklama</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="orderRows">
+                @for (int i = 0; i < Model; i++)
+                {
+                    <tr class="order-row">
+                        <td><input name=@Html.Raw("orderProductsmodelName" + i) class="form-control" /></td>
+                        <td><input name=@Html.Raw("orderProductscolor" + i) class="form-control" /></td>
+                        <td><input id="@Html.Raw("orderProductsnumber" + i)" class="form-control form-control-sm text-center" value="@(i + 1)" readonly /></td>
+                        <td><input name=@Html.Raw("orderProductslength" + i) class="form-control boy" type="number" step="any" /></td>
+                        <td><input name=@Html.Raw("orderProductswidth" + i) class="form-control en" type="number" step="any" /></td>
+                        <td><input name=@Html.Raw("orderProductsquantity" + i) class="form-control adet" type="number" step="any" /></td>
+                        <td><input name=@Html.Raw("orderProductssquareMeter" + i) class="form-control metrekare" readonly /></td>
+                        @if (isAdmin)
+                        {
+                            <td><input name=@Html.Raw("orderProductssquareMeterPrice" + i) class="form-control fiyat" type="number" step="any" /></td>
+                            <td><input name=@Html.Raw("orderProductsprice" + i) class="form-control toplam" readonly /></td>
+                        }
+                        <td><input name=@Html.Raw("orderProductsdescription" + i) class="form-control" /></td>
+                        <td><button type="button" class="btn btn-danger btn-sm remove-row">&times;</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Toplamlar -->
+    <div class="row mt-2">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Toplam m²:</label>
+                <input type="text" name=@Html.Raw("totalSquareMeter") id="totalSquareMeter" class="form-control" readonly />
+            </div>
+        </div>
+        @if (isAdmin)
+        {
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Ara Toplam:</label>
+                    <input type="text" name=@Html.Raw("totalPrice") id="totalPrice" class="form-control" readonly />
+                </div>
+            </div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2 mb-3">Kaydet</button>
+</form>
+
+<script src="~/js/Order/Partial/orderTablePartial.js"></script>
+<script>
+    var rowIndex = @Model;
+    var isAdmin = @isAdmin.ToString().ToLower();
+</script>

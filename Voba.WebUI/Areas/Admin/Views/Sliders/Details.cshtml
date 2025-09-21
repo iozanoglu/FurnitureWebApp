@@ -1,0 +1,23 @@
+﻿@model Slider
+
+@{
+    ViewData["Title"] = "Slider Detay";
+}
+
+<div class="container my-4">
+    <hr/>
+    <div class="mb-4">
+        <span class="fw-semibold fs-4">Başlık:</span>
+        <span class="fw-bold text-dark fs-5 ms-2">@Html.DisplayFor(model => model.Title)</span>
+    </div>
+
+    <div class="text-center mb-4">
+        <img src="/Img/Slider/@Model.Image" class="img-fluid rounded shadow" style="max-height: 350px; object-fit: cover;" />
+    </div>
+
+    <div class="d-flex justify-content-center gap-2">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-lg">Düzenle</a>
+        <a asp-action="Index" class="btn btn-secondary btn-lg">Listeye geri dön</a>
+    </div>
+
+</div>
